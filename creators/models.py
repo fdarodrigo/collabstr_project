@@ -1,17 +1,15 @@
+# creators/models.py
 from django.db import models
 
 class Creator(models.Model):
-    """
-    Escrever aqui o que o modelo faz
-    """
     PLATFORMS = [
         ('Instagram', 'Instagram'),
         ('TikTok', 'TikTok'),
         ('User Generated Content', 'User Generated Content'),
     ]
-    name = models.CharField(max_length=100) #colocar se é null e blank, se é default
+    name = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
-    rating = models.FloatField() #passa parâmetro default
+    rating = models.FloatField()
     platform = models.CharField(max_length=25, choices=PLATFORMS)
 
     def __str__(self):
@@ -23,3 +21,7 @@ class Content(models.Model):
 
     def __str__(self):
         return self.url
+
+    @property
+    def is_video(self):
+        return self.url.endswith(('.mp4', '.mov', '.avi'))

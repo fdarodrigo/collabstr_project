@@ -1,0 +1,194 @@
+.modal, .modal-filters, .modal-package{
+    display: none;
+    position: fixed;
+    z-index: 999999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(44, 46, 50, 0.9);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.modal-content-holder, .modal-content-holder-filters, .modal-content-holder-package{
+    display: flex;
+    justify-content: center;
+    min-width: 550px;
+    width: 550px;
+    max-width: 850px;
+    background-color: white;
+    box-shadow: var(--darkBoxShadow);
+    border-radius: 20px;
+}
+
+.modal-content-header{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 22px 48px;
+}
+
+.modal-content-header-title{
+    display: flex;
+    align-items: center;
+    font-size: 125%;
+    font-weight: 700;
+    text-align: center;
+}
+
+.modal-content-footer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 20px 20px 20px;
+    width: calc(100% - 40px);
+}
+
+.modal-content-scroll{
+    overflow-y: scroll;
+    max-height: 70vh;
+    padding: 20px;
+    width: calc(87% - 40px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-txt{
+    text-align: left;
+    font-weight: 300;
+    margin: 0 auto;
+    font-size: 100%;
+    line-height: 1.3;
+}
+
+.modal-txt-space{
+    margin-bottom: 5%;
+}
+
+.modal-btn{
+    background-color: var(--black);
+    color: white;
+    width: 85%;
+    padding: 16px 0px;
+}
+
+.modal-btn-secondary{
+    background-color: white;
+    border: 1px solid var(--black);
+    color: var(--black);
+    margin-top: 15px;
+}
+
+.close-modal, .close-modal-filters, .close-modal-package{
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-modal-img{
+    width: 10px;
+    height: 11px;
+    box-shadow: var(--mediumBoxShadow);
+    padding: 6px;
+    border-radius: 50%;
+    border: 1px solid #fefefe;
+}
+
+/** package modal **/
+
+.modal-package-price{
+    font-weight: 500;
+    font-size: 130%;
+}
+
+.modal-package-desc{
+    color: gray;
+    white-space: pre-line;
+    margin: 18px 0;
+    font-size: 90%;
+}
+
+.missing-out-information-content{
+    display: flex;
+    align-items: center;
+    margin: 12px 0px;
+}
+
+.missing-out-text{
+    padding-left: 16px;
+}
+
+.highlight{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.underlined{
+    text-decoration: underline;
+}
+
+.colored-line{
+    width: 8px;
+    background: linear-gradient(
+        to bottom, 
+        #FF9191 0%, 
+        #B32DC2 51%, 
+        #FB669D 74%
+      );
+    height: 56px;
+    border-radius: 8px;
+}
+
+.centered{
+    text-align: center;
+}
+
+.divider-line{
+    padding: 20px 0px;
+    color: #d6d6d6;
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 80%;
+}
+
+.line{
+    height: 2px;
+    width: 100%;
+    background: #d6d6d6;
+    align-self: center;
+}
+
+.cancel-subscription-btn{
+    margin-top: 64px;
+    background: white;
+    color: #F63737;
+    border: 1px solid #E84747;
+}
+
+.calendly-inline-widget iframe{
+    border-radius: 8px;
+}
+
+@media only screen and (max-width: 800px) {
+    .modal-content-holder, .modal-content-holder-filters, .modal-content-holder-package{
+        width: 95% !important;
+        min-width: 95%;
+    }
+
+    .modal-content-scroll{
+        padding: 15px;
+        width: calc(95% - 30px);
+    }
+
+    .modal-btn{
+        width: 92%;
+    }
+}

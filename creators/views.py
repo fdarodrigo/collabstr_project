@@ -6,7 +6,7 @@ def content_list(request):
     """
     Escrever aqui o que a view faz
     """
-    contents = Content.objects.select_related('creator').all()[:30]
+    contents = Content.objects.select_related('creator').all()[:90]
     
     return render(request, 'home.html', {'contents': contents})
 
