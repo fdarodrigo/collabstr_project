@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/listing.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %}">
     <meta charset="UTF-8">
     <style>
         /* latin */
@@ -71,9 +72,6 @@
             <h2 class="hero-subtitle">Find and hire top Instagram, TikTok, YouTube, and UGC influencers to create unique
                 content for your brand</h2>
 
-
-            <link rel="stylesheet" type="text/css" href="/static/igmarketplace/search/search.css?v=3.70">
-
             <form class="search-form-holder" method="get" action="/influencers">
                 <div class="search-holder">
                     <div class="filter-section platform-filter-section">
@@ -129,17 +127,19 @@
                 <!-- Esse é o meu -->
                 <div class="listing-row">
                     {% for content in contents %}
-                    
-                    <div class="profile-listing-holder">
-                        
-                        <a href="/{{ content.creator.username }}" target="_blank"><span class="link-spanner"></span></a>
-                        
+
+                    <div class="profile-listing-holder" data-url="{{ content.url }}">
                         <div class="profile-listing-img-holder">
- 
-                            <img class="profile-listing-img"
-                                src="{{ content.url }}"
-                                alt="{{ content.creator.name }}">
-                                
+                            {% if content.is_video %}
+                            <video class="profile-listing-img" controls>
+                                <source src="{{ content.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button onclick="window.open('{{ content.url }}', '_blank')">Play Video</button>
+                            {% else %}
+                            <img class="profile-listing-img" src="{{ content.url }}" alt="{{ content.creator.name }}">
+                            <button onclick="window.open('{{ content.url }}', '_blank')">Download Image</button>
+                            {% endif %}
                             <div class="profile-listing-owner-holder">
                                 <div class="profile-listing-owner-info-holder">
                                     <div class="profile-listing-owner-name">{{ content.creator.name }}</div>
@@ -147,1030 +147,29 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="profile-listing-info-row">
                             <div class="profile-listing-category">{{ content.creator.platform }}</div>
-                            <div class="profile-listing-price">${{ content.creator.rating }}</div>
+                            <div class="profile-listing-price">${{ content.creator.rating|floatformat:2 }}</div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-            <!-- <div class="section-holder">
-                <h2 class="section-title">Instagram</h2>
-                <h3 class="section-subtitle">Hire Instagram influencers<span class="explore-btn"
-                        onclick="location.href='/influencers?p=instagram'">See All</span></h3>
-                
-                 <div class="listing-row">
 
-                    <div class="profile-listing-holder">
-
-                        <a href="/outdoorbengal?p=instagram" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/16636/1627627146513741.webp"
-                                alt="instagram  creator Albert Colominas being photographed">
-                           
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Albert Colominas</div>
-                                    <div class="profile-listing-owner-location">New York, NY, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">Instagram</div>
-                            <div class="profile-listing-price">$500</div>
-                        </div>
-                        <h3 class="profile-listing-title">Transform The Bond With Your Cat - Adventure Cat …</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/mensweardog?p=instagram" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/11607/16276328246112604.webp"
-                                alt="instagram  creator Yena Kim being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Yena Kim</div>
-                                    <div class="profile-listing-owner-location">Brooklyn, NY, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">Instagram</div>
-                            <div class="profile-listing-price">$4600</div>
-                        </div>
-                        <h3 class="profile-listing-title">Bodhi Is The Most Stylish Dog In The World</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/alexdawson?p=instagram" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/21786/1627628032810348.webp"
-                                alt="instagram  creator Alex Dawson Photography being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Alex Dawson Photography</div>
-                                    <div class="profile-listing-owner-location">Stockholm, AB, SE</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">Instagram</div>
-                            <div class="profile-listing-price">$500</div>
-                        </div>
-                        <h3 class="profile-listing-title">Underwater &amp; Commercial Photography </h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/posspantry?p=instagram" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/94267/1690349985200056.webp"
-                                alt="instagram  creator Adrian Hume being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Adrian Hume</div>
-                                    <div class="profile-listing-owner-location">Melbourne, VIC, AU</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">Instagram</div>
-                            <div class="profile-listing-price">$300</div>
-                        </div>
-                        <h3 class="profile-listing-title">Food Content Creator</h3>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="section-holder">
-                <h2 class="section-title">TikTok</h2>
-                <h3 class="section-subtitle">Hire TikTok influencers<span class="explore-btn"
-                        onclick="location.href='/influencers?p=tiktok'">See All</span></h3>
-                <div class="listing-row">
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/blameitonel?p=tiktok" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/120516/1704881603694502.webp"
-                                alt="tiktok  creator El being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">El</div>
-                                    <div class="profile-listing-owner-location">Sydney, NSW, AU</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">TikTok</div>
-                            <div class="profile-listing-price">$200</div>
-                        </div>
-                        <h3 class="profile-listing-title">Travel, Fashion, + Lifestyle Content Creator</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/cerecampbell?p=tiktok" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/37765/16427061517729764.webp"
-                                alt="tiktok  creator Cere Campbell being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Cere Campbell</div>
-                                    <div class="profile-listing-owner-location">Saint George, UT, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">TikTok</div>
-                            <div class="profile-listing-price">$600</div>
-                        </div>
-                        <h3 class="profile-listing-title">Fashion &amp; Lifestyle Content Creator</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/chanceperez?p=tiktok" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/87805/16872899093741558.webp"
-                                alt="tiktok  creator Chance being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Chance</div>
-                                    <div class="profile-listing-owner-location">Los Alamitos, CA, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">TikTok</div>
-                            <div class="profile-listing-price">$400</div>
-                        </div>
-                        <h3 class="profile-listing-title">Lifestyle, Family And Fitness</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/kaileymaurer?p=tiktok" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/11196/16276327561479251.webp"
-                                alt="tiktok  creator Kailey Maurer being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Kailey Maurer</div>
-                                    <div class="profile-listing-owner-location">Encinitas, CA, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">TikTok</div>
-                            <div class="profile-listing-price">$3500</div>
-                        </div>
-                        <h3 class="profile-listing-title">Fitness, Gymnastics, &amp; Lifestyle Content</h3>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="section-holder">
-                <h2 class="section-title">Categories</h2>
-                <div class="listing-row">
-
-                    <div class="category-listing-holder">
-                        <a href="/influencers?c=fashion" target="_blank"><span class="link-spanner"></span></a>
-                        <div class="category-listing-img-holder">
-                            <img loading="lazy" class="category-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/categories/fashion.png"
-                                alt="influencer being photographed">
-                            <div class="category-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="category-listing-owner-name">Fashion</div>
-                                </div>
-                            </div>
+            <div class="modal" style="display: none;">
+                <div class="modal-content-holder" style="width: 55vw; max-height: 85%;">
+                    <div class="modal-content-header">
+                        <div class="close-modal"><img class="close-modal-img"
+                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/closeModal.svg">
                         </div>
                     </div>
+                    <div class="modal-content-scroll">
+                        <div class="show-all-holder show-all-holder-3">
 
-                    <div class="category-listing-holder">
-                        <a href="/influencers?c=music%20%26%20dance" target="_blank"><span
-                                class="link-spanner"></span></a>
-                        <div class="category-listing-img-holder">
-                            <img loading="lazy" class="category-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/categories/music &amp; dance.png"
-                                alt="influencer being photographed">
-                            <div class="category-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="category-listing-owner-name">Music &amp; Dance</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="category-listing-holder">
-                        <a href="/influencers?c=beauty" target="_blank"><span class="link-spanner"></span></a>
-                        <div class="category-listing-img-holder">
-                            <img loading="lazy" class="category-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/categories/beauty.png"
-                                alt="influencer being photographed">
-                            <div class="category-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="category-listing-owner-name">Beauty</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="category-listing-holder">
-                        <a href="/influencers?c=travel" target="_blank"><span class="link-spanner"></span></a>
-                        <div class="category-listing-img-holder">
-                            <img loading="lazy" class="category-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/categories/travel.png"
-                                alt="influencer being photographed">
-                            <div class="category-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="category-listing-owner-name">Travel</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div>
-                <div class="logo-title">As seen in</div>
-                <div class="logo-holder">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/buzzfeed.svg"
-                        alt="Buzzfeed logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/bloomberg.svg"
-                        alt="Bloomberg logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/nyt.svg"
-                        alt="New York Times logo" style="width: 175px;" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/yahoo.svg"
-                        alt="Forbes logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/shopify.svg"
-                        alt="Shopify logo" loading="lazy">
-                </div>
-            </div>
-            <div class="row-holder">
-                <h2 class="row-title" id="how-it-works">How Collabstr Works</h2>
-                <h3 class="row-subtitle">Everything you need to run your influencer campaigns, and more.</h3>
-                <div class="steps-holder">
-                    <div class="step-holder">
-                        <img loading="lazy" class="step-img"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/step1.png"
-                            alt="Influencer posing">
-                        <div class="step-txt-holder">
-                            <div class="step-num">1</div>
-                            <h3 class="step-title">Search Influencers</h3>
-                            <div class="step-txt">Search through thousands of vetted Instagram, TikTok, and YouTube
-                                influencers.</div>
-                        </div>
-                    </div>
-                    <div class="step-holder">
-                        <img loading="lazy" class="step-img"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/step2.png"
-                            alt="Influencer posing">
-                        <div class="step-txt-holder">
-                            <div class="step-num">2</div>
-                            <h3 class="step-title">Purchase Securely</h3>
-                            <div class="step-txt">Safely purchase through Collabstr. We hold your payment until the work
-                                is completed.</div>
-                        </div>
-                    </div>
-                    <div class="step-holder">
-                        <img loading="lazy" class="step-img"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/step3.png"
-                            alt="Influencer posing">
-                        <div class="step-txt-holder">
-                            <div class="step-num">3</div>
-                            <h3 class="step-title">Receive Quality Content</h3>
-                            <div class="step-txt">Receive your high-quality content from influencers directly through
-                                the platform.</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row-holder">
-                <div class="features-holder">
-                    <div class="feature-holder">
-                        <div class="feature-title"><img class="feature-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/money.svg"
-                                alt="Money icon" loading="lazy">No Upfront Cost</div>
-                        <div class="feature-txt">Search influencers for free. No subscriptions, contracts or hidden
-                            fees.</div>
-                    </div>
-                    <div class="feature-holder">
-                        <div class="feature-title"><img class="feature-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/check.svg"
-                                alt="Check icon" loading="lazy">Vetted Influencers</div>
-                        <div class="feature-txt">Every influencer is vetted by us. Always receive high-quality,
-                            professional content.</div>
-                    </div>
-                    <div class="feature-holder">
-                        <div class="feature-title"><img class="feature-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/chat.svg"
-                                alt="Chat icon" loading="lazy">Instant Chat</div>
-                        <div class="feature-txt">Instantly chat with influencers and stay in touch throughout the whole
-                            transaction.</div>
-                    </div>
-                    <div class="feature-holder">
-                        <div class="feature-title"><img class="feature-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/secure.svg"
-                                alt="Lock icon" loading="lazy">Secure Purchases</div>
-                        <div class="feature-txt">Your money is held safely until you approve the influencer’s work.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row-holder">
-                <h2 class="row-title">Trusted by 80,000+ Brands</h2>
-                <h3 class="row-subtitle">View collaborations from brands like Wealthsimple, Hopper, Deezer, and more.
-                </h3>
-                <div class="listing-row">
-                    <div class="content-holder">
-                        <div class="play-btn-holder">
-                            <img class="play-btn"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/play.svg"
-                                loading="lazy">
-                        </div>
-                        <video class="content-img content-vid" playsinline="" preload="metadata">
-                            <source src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/1.mp4#t=0.1">
-                        </video>
-                    </div>
-
-                    <div class="content-holder">
-                        <a rel="nofollow" href="https://www.instagram.com/p/CN546zuBXwr/" target="_blank"><span
-                                class="link-spanner"></span></a>
-                        <img loading="lazy" class="content-img"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/2.png"
-                            alt="Influencer content">
-                    </div>
-
-                    <div class="content-holder">
-                        <div class="play-btn-holder">
-                            <img class="play-btn"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/play.svg"
-                                loading="lazy">
-                        </div>
-                        <video class="content-img content-vid" playsinline="" preload="metadata">
-                            <source src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/3.mp4#t=0.1">
-                        </video>
-                    </div>
-
-                    <div class="content-holder">
-                        <a rel="nofollow" href="https://www.instagram.com/p/CB3KJUdB3Sq/" target="_blank"><span
-                                class="link-spanner"></span></a>
-                        <img loading="lazy" class="content-img"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/4.png"
-                            alt="Influencer content">
-                    </div>
-
-                    <div class="content-holder">
-                        <div class="play-btn-holder">
-                            <img class="play-btn"
-                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/play.svg"
-                                loading="lazy">
-                        </div>
-                        <video class="content-img content-vid" playsinline="" preload="metadata">
-                            <source src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/content/5.mp4#t=0.1">
-                        </video>
-                    </div>
-                </div>
-
-                <div class="brand-logo-holder logo-holder">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/wealthsimple.svg"
-                        alt="Wealthsimple logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/clickup.svg"
-                        alt="ClickUp logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/hopper.svg"
-                        alt="Hopper logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/un.svg"
-                        alt="United Nations logo" loading="lazy">
-                    <img class="logo-img"
-                        src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/logos/deezer.svg"
-                        alt="Mcdonalds logo" loading="lazy">
-                </div>
-            </div>
-
-            <script>
-                $('.content-vid').click(function () {
-                    if ($(this).prop('paused')) {
-                        $(this).trigger('play');
-                        $(this).parent().find('.play-btn').css('visibility', 'hidden');
-                    } else {
-                        $(this).trigger('pause');
-                        $(this).parent().find('.play-btn').css('visibility', 'visible');
-                    }
-                });
-            </script>
-            <div class="row-holder">
-                <h2 class="row-title" id="case-studies">Case Studies</h2>
-                <div class="listing-row case-study-row">
-                    <div class="profile-listing-holder">
-                        <a href="/case-study/wealthsimple" target="_blank"><span class="link-spanner"></span></a>
-                        <div class="profile-listing-img-holder">
-                            <img loading="lazy" class="profile-listing-img" alt="Collabstr case study"
-                                src="https://d5ik1gor6xydq.cloudfront.net/caseStudies/wealthsimple/header.jpg">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <h2 class="similar-post-title">Wealthsimple Launches 'Wealthsimple Cash' With
-                                        Instagram and TikTok Influencers on Collabstr</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="profile-listing-holder">
-                        <a href="/case-study/numi" target="_blank"><span class="link-spanner"></span></a>
-                        <div class="profile-listing-img-holder">
-                            <img loading="lazy" class="profile-listing-img" alt="Collabstr case study"
-                                src="https://d5ik1gor6xydq.cloudfront.net/caseStudies/numi/header.jpg">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <h2 class="similar-post-title">Numi Generates 50,000+ Impressions for New Spring
-                                        Collection with Collabstr</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="profile-listing-holder">
-                        <a href="/case-study/ad-agency" target="_blank"><span class="link-spanner"></span></a>
-                        <div class="profile-listing-img-holder">
-                            <img loading="lazy" class="profile-listing-img" alt="Collabstr case study"
-                                src="https://d5ik1gor6xydq.cloudfront.net/caseStudies/mcfadden/header.jpg">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <h2 class="similar-post-title">Advertising Agency Gets 100+ Influencers Per Month on
-                                        Autopilot with Collabstr</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row-holder">
-                <h2 class="row-title">80,000+ Brands Work With Influencers on Collabstr</h2>
-                <div class="testimonials-holder">
-                    <div class="testimonial-holder">
-                        <svg viewBox="0 0 128 128" class="quote-img">
-                            <path
-                                d="M27.7 12C14.4 16.2 5 26.1 1.5 39.6.3 44.2 0 51.9 0 76c0 33.6.2 35 6.3 39.4 2.6 1.9 4.5 2.1 22.5 2.4 19.2.3 19.8.3 23.2-2 6.3-4.2 7-7 7-27.1 0-19.9-.7-22.9-6.1-26.8-3.1-2.2-4.6-2.4-15.9-2.7-11-.3-12.8-.6-14.8-2.5-3-2.8-3-10.4-.1-16.5 3.1-6.2 8.4-9.5 17-10.3 3.8-.3 7.5-1.2 8.4-1.9 1.9-1.6 2.1-15 .3-16.8s-13.5-1.4-20.1.8zm69.3-.1c-7.8 2.5-10.9 4.3-15.9 9.3C70.1 32.2 69 37.1 69 76c0 34.1.2 35.3 6.9 39.7 3.2 2.2 4.3 2.3 22 2.3 20.5 0 23.4-.7 27.5-6.3 1.9-2.6 2.1-4.5 2.4-21.7.4-21.2-.3-24.1-6.2-28.3-2.7-1.9-4.6-2.2-15.7-2.5C90.5 58.8 89 58 89 49.8c0-11.5 7-18.8 19.1-19.9 3.8-.3 7.5-1.2 8.4-1.9 1.9-1.6 2.1-15 .3-16.8s-13.4-1.4-19.8.7z">
-                            </path>
-                        </svg>
-                        <div class="testimonial-title">5 stars from a creator and a brand</div>
-                        <div class="testimonial-txt">I've used Collabstr from both the Creator side and the Brand side!
-                            It is extremely user-friendly and has lead to some great relationships with creators/brands
-                            I wouldn't have been connected to otherwise. Love the platform!</div>
-                        <div class="testimonial-author">Layla - Influencer &amp; Founder</div>
-                    </div>
-
-                    <div class="testimonial-holder">
-                        <svg viewBox="0 0 128 128" class="quote-img">
-                            <path
-                                d="M27.7 12C14.4 16.2 5 26.1 1.5 39.6.3 44.2 0 51.9 0 76c0 33.6.2 35 6.3 39.4 2.6 1.9 4.5 2.1 22.5 2.4 19.2.3 19.8.3 23.2-2 6.3-4.2 7-7 7-27.1 0-19.9-.7-22.9-6.1-26.8-3.1-2.2-4.6-2.4-15.9-2.7-11-.3-12.8-.6-14.8-2.5-3-2.8-3-10.4-.1-16.5 3.1-6.2 8.4-9.5 17-10.3 3.8-.3 7.5-1.2 8.4-1.9 1.9-1.6 2.1-15 .3-16.8s-13.5-1.4-20.1.8zm69.3-.1c-7.8 2.5-10.9 4.3-15.9 9.3C70.1 32.2 69 37.1 69 76c0 34.1.2 35.3 6.9 39.7 3.2 2.2 4.3 2.3 22 2.3 20.5 0 23.4-.7 27.5-6.3 1.9-2.6 2.1-4.5 2.4-21.7.4-21.2-.3-24.1-6.2-28.3-2.7-1.9-4.6-2.2-15.7-2.5C90.5 58.8 89 58 89 49.8c0-11.5 7-18.8 19.1-19.9 3.8-.3 7.5-1.2 8.4-1.9 1.9-1.6 2.1-15 .3-16.8s-13.4-1.4-19.8.7z">
-                            </path>
-                        </svg>
-                        <div class="testimonial-title">Best platform to connect with influencers</div>
-                        <div class="testimonial-txt">Best platform to connect with influencers and content creators.
-                            I’ve signed up to many platforms, collabstr is the easiest to use and gives the best results
-                            for my brand.</div>
-                        <div class="testimonial-author">Myriam - Founder of BBeyond</div>
-                    </div>
-
-                    <div class="testimonial-holder">
-                        <svg viewBox="0 0 128 128" class="quote-img">
-                            <path
-                                d="M27.7 12C14.4 16.2 5 26.1 1.5 39.6.3 44.2 0 51.9 0 76c0 33.6.2 35 6.3 39.4 2.6 1.9 4.5 2.1 22.5 2.4 19.2.3 19.8.3 23.2-2 6.3-4.2 7-7 7-27.1 0-19.9-.7-22.9-6.1-26.8-3.1-2.2-4.6-2.4-15.9-2.7-11-.3-12.8-.6-14.8-2.5-3-2.8-3-10.4-.1-16.5 3.1-6.2 8.4-9.5 17-10.3 3.8-.3 7.5-1.2 8.4-1.9 1.9-1.6 2.1-15 .3-16.8s-13.5-1.4-20.1.8zm69.3-.1c-7.8 2.5-10.9 4.3-15.9 9.3C70.1 32.2 69 37.1 69 76c0 34.1.2 35.3 6.9 39.7 3.2 2.2 4.3 2.3 22 2.3 20.5 0 23.4-.7 27.5-6.3 1.9-2.6 2.1-4.5 2.4-21.7.4-21.2-.3-24.1-6.2-28.3-2.7-1.9-4.6-2.2-15.7-2.5C90.5 58.8 89 58 89 49.8c0-11.5 7-18.8 19.1-19.9 3.8-.3 7.5-1.2 8.4-1.9 1.9-1.6 2.1-15 .3-16.8s-13.4-1.4-19.8.7z">
-                            </path>
-                        </svg>
-                        <div class="testimonial-title">Great way to generate content</div>
-                        <div class="testimonial-txt">Been using Collabstr to generate content for our seasonal clothing
-                            lines. Super easy for us to search for relevant influencers and pay them. We save at least
-                            10-20 hours a month on this.</div>
-                        <div class="testimonial-author">Courtney - Marketer</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-holder">
-                <h2 class="section-title">YouTube</h2>
-                <h3 class="section-subtitle">Hire YouTube influencers<span class="explore-btn"
-                        onclick="location.href='/influencers?p=youtube'">See All</span></h3>
-                <div class="listing-row">
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/rikaajo?p=youtube" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-                            <div class="profile-listing-badge-holder">
-
-                                <div class="profile-listing-badge tooltip">
-                                    <svg class="profile-listing-badge-img" viewBox="0 0 512 512" fill="#FFADBB">
-                                        <path
-                                            d="M233 1.5c-44.2 5.8-82.1 24.1-113 54.6C59.6 115.7 44 206 80.9 281.5c34.4 70.3 106.5 113.7 183.1 110.2 72.1-3.3 135.1-44.9 167.1-110.2 52.9-108.1-4.8-239-120.6-273.6-22.7-6.8-54.7-9.4-77.5-6.4zm33 94.1c1.6 1.6 8.2 13.5 14.6 26.4 6.3 12.9 11.6 23.6 11.7 23.7.1 0 11.5 1.8 25.2 3.8 13.8 2 26.7 4.1 28.7 4.6 6.9 1.8 11.8 10.9 9.8 17.9-.7 2.5-6.4 8.9-21 23.5l-20 20.1 4.5 26.4c2.8 16.1 4.4 27.8 4 29.8-1.3 7.1-10 13.2-16.8 11.8-1.7-.4-13.8-6.3-26.9-13.2L256 257.9l-23.8 12.5c-13.1 6.9-25.2 12.8-26.9 13.2-6.8 1.4-15.5-4.7-16.8-11.8-.4-2 1.2-13.5 4-29.7l4.6-26.5-20.1-20.1c-16.5-16.5-20.3-20.8-21-23.9-1.6-7.4 3-15.7 9.8-17.5 2-.5 14.9-2.6 28.7-4.6 13.7-2 25-3.7 25.1-3.8s5.6-11 12.2-24.2c11.1-22.3 14.3-27.3 18.2-28.8.8-.4 4.1-.5 7.3-.4 4.9.3 6.3.8 8.7 3.3z">
-                                        </path>
-                                        <path
-                                            d="M248 155.7c-5.9 11.6-8.2 15.2-10.6 16.6-1.9 1-9.2 2.6-18 3.9-8.2 1.2-15.1 2.3-15.4 2.5-.2.2 4.6 5.4 10.7 11.6s11.6 12.2 12.2 13.4c1.6 3.1 1.4 7.1-1.3 22.8-1.3 7.7-2.3 14.1-2.1 14.3.1.1 6.7-3.1 14.7-7.3 9.4-4.9 15.6-7.5 17.8-7.5 2.9 0 19.6 7.6 28.8 13.2 1.8 1.1 3.5 1.9 3.7 1.7.1-.2-.8-6.7-2.1-14.4-2.8-16.3-2.9-19.6-1-23.3.8-1.5 6.4-7.6 12.4-13.5 6.1-6 10.5-11 9.9-11.2-.7-.2-7.7-1.3-15.6-2.5-8.4-1.2-15.8-2.8-17.5-3.8-2.4-1.3-4.8-5.1-10.6-16.5-4.1-8.1-7.7-14.7-8-14.7s-3.9 6.6-8 14.7zM65.7 395.3C49 433.1 44 445.4 44 448.5c0 7.6 6.7 14.5 14.1 14.5 2 0 18.4-5 36.4-11.1 18-6 33.1-10.6 33.5-10.2s6.6 14.7 13.9 31.8c14.2 33.4 15.5 35.5 23.3 37.5 5.2 1.4 10.4.2 13.6-3.3 2.9-3.1 40.6-87.7 39.5-88.7-.4-.4-4.8-1.5-9.8-2.5-14.4-2.8-34.8-10-51.1-18-23.1-11.2-40.2-23.4-59.4-42.1l-10.5-10.2-21.8 49.1zm350.2-40.7c-10.1 10.3-25.2 22.6-37.4 30.7-20.5 13.5-52.3 26.7-75 31.2-4.9 1-9.4 2.1-9.8 2.5-.5.4 7.8 20.1 18.4 43.9 20.3 45.8 21.2 47.3 28.5 48.7 4.2.8 11.1-1.6 14.2-4.9 1.1-1.2 8-16.1 15.3-33.2s13.6-31.4 13.9-31.8c.4-.5 15.5 4.1 33.5 10.2 18.2 6.2 34.3 11.1 36.3 11.1 7.5 0 14.2-6.9 14.2-14.6 0-3.2-4.8-15-21.8-53.2l-21.8-49.1-8.5 8.5z">
-                                        </path>
-                                    </svg>
-                                    <div class="profile-listing-badge-title">Top Creator</div>
-                                    <div class="tooltip-txt">Top creators have completed multiple orders and have a high
-                                        rating from brands.</div>
-                                </div>
-
-
-                            </div>
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/48598/16770051749124527.webp"
-                                alt="youtube  creator Rikaajo being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Rikaajo<span
-                                            class="profile-listing-review-holder"><img
-                                                class="profile-listing-review-img"
-                                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/star.svg">5.0</span>
-                                    </div>
-                                    <div class="profile-listing-owner-location">Houston, TX, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">YouTube</div>
-                            <div class="profile-listing-price">$100</div>
-                        </div>
-                        <h3 class="profile-listing-title">Lifestyle Content Creator </h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/leilaberisha?p=youtube" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/128798/17065280188389275.webp"
-                                alt="youtube  creator Leila Berisha being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Leila Berisha</div>
-                                    <div class="profile-listing-owner-location">Exeter, GB</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">YouTube</div>
-                            <div class="profile-listing-price">$100</div>
-                        </div>
-                        <h3 class="profile-listing-title">Lifestyle Content Creator</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/abbyandfiona?p=youtube" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/22910/16276282103027306.webp"
-                                alt="youtube  creator Abby &amp; Fiona being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Abby &amp; Fiona</div>
-                                    <div class="profile-listing-owner-location">Minneapolis, MN, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">YouTube</div>
-                            <div class="profile-listing-price">$300</div>
-                        </div>
-                        <h3 class="profile-listing-title">Lgbtq+ Lifestyle Content Creators</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/leoserra?p=youtube" target="_blank"><span class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/66375/16746861487275684.webp"
-                                alt="youtube  creator Leo Serra being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Leo Serra<span
-                                            class="profile-listing-review-holder"><img
-                                                class="profile-listing-review-img"
-                                                src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/star.svg">5.0</span>
-                                    </div>
-                                    <div class="profile-listing-owner-location">Lanzarote, GC, ES</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">YouTube</div>
-                            <div class="profile-listing-price">$1500</div>
-                        </div>
-                        <h3 class="profile-listing-title">Singer-Singwriter And Musician</h3>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="section-holder">
-                <h2 class="section-title">User Generated Content</h2>
-                <h3 class="section-subtitle">Purchase high-quality UGC<span class="explore-btn"
-                        onclick="location.href='/influencers?p=user generated content'">See All</span></h3>
-                <div class="listing-row">
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/clairereilly?p=user generated content" target="_blank"><span
-                                class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/86247/17124659022718751.webp"
-                                alt="user generated content  creator Claire Reilly being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Claire Reilly</div>
-                                    <div class="profile-listing-owner-location">Vancouver, BC, CA</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">User Generated Content</div>
-                            <div class="profile-listing-price">$300</div>
-                        </div>
-                        <h3 class="profile-listing-title">Lgbtq+ Lifestyle Creator</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/aliwinterco?p=user generated content" target="_blank"><span
-                                class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/150291/1712856372368054.webp"
-                                alt="user generated content  creator Ali Haymes being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Ali Haymes</div>
-                                    <div class="profile-listing-owner-location">Chicago, IL, US</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">User Generated Content</div>
-                            <div class="profile-listing-price">$100</div>
-                        </div>
-                        <h3 class="profile-listing-title">Travel Content Creator And Social Media Manager</h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/mariavska?p=user generated content" target="_blank"><span
-                                class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/132924/17077424589136872.webp"
-                                alt="user generated content  creator Mariya Kutsiyovska being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Mariya Kutsiyovska</div>
-                                    <div class="profile-listing-owner-location">Athens, GR</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">User Generated Content</div>
-                            <div class="profile-listing-price">$100</div>
-                        </div>
-                        <h3 class="profile-listing-title">Lifestyle Content Creator </h3>
-
-                    </div>
-
-                    <div class="profile-listing-holder">
-
-                        <a href="/elanyx?p=user generated content" target="_blank"><span
-                                class="link-spanner"></span></a>
-
-                        <div class="profile-listing-img-holder">
-
-
-
-                            <img loading="lazy" class="profile-listing-img"
-                                src="https://d5ik1gor6xydq.cloudfront.net/sellers/139385/17098052162740376.webp"
-                                alt="user generated content  creator Ela being photographed">
-                            <div class="profile-listing-owner-holder">
-                                <div class="profile-listing-owner-info-holder">
-                                    <div class="profile-listing-owner-name">Ela</div>
-                                    <div class="profile-listing-owner-location">Cluj-Napoca, RO</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="profile-listing-info-row">
-                            <div class="profile-listing-category">User Generated Content</div>
-                            <div class="profile-listing-price">$50</div>
-                        </div>
-                        <h3 class="profile-listing-title">Beauty And Lifestyle Content Creator</h3>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="faqs-holder">
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">What is Influencer Marketing?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Influencer marketing is a digital marketing strategy
-                            that involves collaborating with individuals, known as influencers, who have a dedicated and
-                            engaged following on social media platforms and other online channels. These influencers can
-                            impact their followers' purchasing decisions due to their credibility and authority in
-                            specific niches or industries. Brands partner with influencers to promote their products or
-                            services authentically, build social proof, and leverage their influence to reach a larger
-                            and more targeted audience.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">How Does Influencer Marketing Work?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Influencer marketing operates by identifying suitable
-                            influencers for your brand, establishing a partnership, and creating and distributing
-                            content through the influencer's channels. This content can take various forms, including
-                            sponsored posts, reviews, tutorials, or endorsements. The influencer shares this content
-                            with their audience, effectively introducing your brand or product to a potentially
-                            receptive and <a href="https://collabstr.com/tiktok-engagement-rate-calculator"
-                                target="_blank">engaged audience</a>. The key to successful influencer marketing lies in
-                            crafting authentic and relevant content that resonates with both the influencer's followers
-                            and your brand's message.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">Why is Influencer Marketing Important?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Influencer marketing is important because it enables
-                            brands to connect with their target audience in a more genuine and engaging manner. Unlike
-                            traditional advertising, influencer marketing feels less intrusive and more trustworthy, as
-                            recommendations come from a trusted source. It helps build brand awareness, improve
-                            credibility, drive traffic, boost sales, and foster lasting customer relationships.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">How Can I Find the Right Influencers for My Brand?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Start by identifying your target audience and the
-                            platforms they use. Then, use the Collabstr influencer marketing tool to <a
-                                href="https://collabstr.com/search-influencers" target="_blank">search for
-                                influencers</a> within your niche. Use the gender, price, location, and other filters to
-                            narrow down relevant influencers as much as possible. Once you find an influencer that
-                            you’re interested in working with, you can simply purchase one of their pre-defined content
-                            packages, or send them a custom offer directly through their profile.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">What Are the Benefits of Influencer Marketing for My
-                            brand?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Influencer marketing helps expand your brand's reach,
-                            build trust and credibility through social proof, drive conversions, and can be more
-                            cost-effective than some traditional marketing methods. Additionally, influencer marketing
-                            allows you to tap into highly targeted and engaged audiences that may be challenging to
-                            reach through other means. All in all, there are numerous benefits to influencer marketing
-                            that can be hard to achieve through other marketing channels.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">How Much Does Influencer Marketing Cost?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">The cost of influencer marketing varies widely depending
-                            on factors such as the influencer's reach, niche, and <a
-                                href="https://collabstr.com/instagram-engagement-rate-calculator"
-                                target="_blank">engagement rates</a>. Micro-influencers with smaller followings may
-                            charge less than macro-influencers or celebrities. Some influencers may work on a per-post
-                            basis, while others prefer ongoing partnerships. If you have a budget in mind, consider
-                            using the price filters found in Collabstr’s search tool to narrow down the influencers that
-                            fit within your budget, this will save you time during the influencer discovery process.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">What Are the Different Types of Influencer Marketing
-                            Campaigns?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Influencer marketing can accommodate various campaign
-                            types, including product reviews, sponsored posts, takeovers, giveaways, and affiliate
-                            marketing. The type of campaign you choose should align with your goals and the influencer's
-                            strengths. You can use a <a href="https://collabstr.com/influencer-campaign-brief-template"
-                                target="_blank">campaign brief template</a> like the one offered by Collabstr to ensure
-                            that you have a well-thought-out campaign brief that encapsulates all the important details
-                            required to have a successful influencer marketing campaign.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">How Do I Measure the Success of an Influencer Marketing
-                            Campaign?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">To measure the success of an influencer marketing
-                            campaign, you can track key performance indicators (KPIs) such as click-through rates,
-                            conversions, and return on investment (ROI). Typically, this tracking would be done through
-                            your own means, such as a discount code or unique link that is used to track the
-                            influencer’s impact on your side. Keep in mind that a large part of influencer marketing is
-                            social proof and social awareness, so many viewers may see your product and navigate to your
-                            website through other methods besides clicking the influencer’s link directly. Additionally,
-                            you can gather feedback from the influencer and analyze audience sentiment to gauge the
-                            campaign's impact on brand perception.</div>
-                    </div>
-                </div>
-
-                <div class="faq-holder" itemscope="" itemprop="mainEntity" itemtype="https://schema.org/Question">
-                    <div class="faq-title-holder">
-                        <h3 class="faq-question" itemprop="name">What Are the Common Mistakes to Avoid in Influencer
-                            Marketing?</h3>
-                        <img class="faq-btn"
-                            src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/plus.svg"
-                            loading="lazy">
-                    </div>
-                    <div itemscope="" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                        <div class="faq-answer" itemprop="text">Common mistakes in influencer marketing include failing
-                            to define clear campaign objectives and expectations and neglecting to communicate changes
-                            in objectives, timelines, and other aspects that affect the outcome of the campaign. Another
-                            major downfall to many influencer marketing campaigns is the expectation that every campaign
-                            is going to hit your KPIs when in reality, brands should focus on collecting feedback and
-                            data so that they can constantly iterate on campaign objectives and angles until they hit
-                            their desired KPIs.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cta-holder">
-                <div class="cta-overlay-holder">
-                    <div class="cta-txt-holder">
-                        <h2 class="cta-title">Find and Hire Influencers</h2>
-                        <h3 class="cta-txt">Search Instagram, TikTok, and YouTube influencers.</h3>
-                        <div class="cta-btn btn">Search Influencers</div>
-                    </div>
-                </div>
-                <img loading="lazy" alt="top influencers" class="cta-img"
-                    src="https://d5ik1gor6xydq.cloudfront.net/websiteImages/creatorMarketplace/cta.png">
-            </div> -->
         </div>
 
     </div>
@@ -1474,6 +473,109 @@
             hideClearBtn();
         }
     });
+
+
+
+
+
+
+    // MODAL
+
+    $(document).ready(function () {
+        function hideModal() {
+            $(".modal").hide();
+            $('.modal-content-holder').css('width', '500px');
+            allowScroll();
+        }
+
+        function showModal(content, width, alreadyOpen) {
+            if (content) $(".modal-content-holder").html(content);
+            if (width) $('.modal-content-holder').css('width', width);
+            $(".modal").css('display', 'flex');
+            if (!alreadyOpen) preventScroll();
+        }
+
+        function preventScroll() {
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function allowScroll() {
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.overflow = '';
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+
+        function hideModalPackage() {
+            $(".modal-package").hide();
+            $('.modal-content-holder-package').css('width', 'initial');
+        }
+
+        function showModalPackage(content, width) {
+            if (content) $(".modal-content-holder-package").html(content);
+            if (width) $('.modal-content-holder-package').css('width', width);
+            $(".modal-package").css('display', 'flex');
+        }
+
+        $(document).on('click', '.close-modal, .btn-close-modal', function () {
+            hideModal();
+        });
+
+        $(document).on('click', '.close-modal-package', function () {
+            hideModalPackage();
+        });
+
+        $(document).on('click', function (e) {
+            if ($(e.target).is('.modal') && !$('.modal').find('iframe').length) {
+                hideModal();
+            }
+            if ($(e.target).is('.modal-package')) {
+                hideModalPackage();
+            }
+        });
+
+        $('.profile-listing-holder').click(function () {
+            event.preventDefault(); // Impede o comportamento padrão do clique
+
+            console.log("A FUNÇÃO ESTÁ PRESTANDO");
+
+            let url = $(this).data('url');
+            let content;
+
+            if (url.endsWith('.mp4') || url.endsWith('.mov')) {
+                content = `<video controls>
+                           <source src="${url}" type="video/mp4">
+                           Your browser does not support the video tag.
+                       </video>`;
+            } else {
+                content = `<img loading="lazy" class="img" src="${url}">`;
+            }
+
+            showModal(content, '55vw');
+
+            let parent = $(this);
+            let modal = $('.modal-package');
+            modal.find('.modal-content-header-title-txt').text('Title');
+            modal.find('.modal-content-header-title-img').attr('src', "IMAGE");
+            modal.find('.modal-content-package-img-holder').addClass(parent.find('.package-img-holder').attr('class'));
+            modal.find('.modal-package-price').text("PRICE");
+            modal.find('.modal-package-desc').text("DESC");
+            modal.find('.modal-btn').data('id', "ID");
+            showModalPackage('', '550px');
+        });
+    });
+
+
+    // END MODAL
+
+
+
+
+
 
     function compare(a, b) {
         // sort b before a
