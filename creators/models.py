@@ -1,4 +1,3 @@
-# creators/models.py
 from django.db import models
 
 class Creator(models.Model):
