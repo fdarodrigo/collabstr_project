@@ -1,9 +1,18 @@
+.listing-row {
+    display: grid;
+    grid-gap: 35px 25px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
 .profile-listing-holder{
     cursor: pointer;
     position: relative;
 }
 
 .profile-listing-img-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 320px;
     position: relative;
@@ -21,7 +30,7 @@
     transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.13, 1.02) 0s;
 }
 
-.profile-listing-holder:hover .profile-listing-img, .category-listing-holder:hover .category-listing-img{
+.profile-listing-holder:hover .profile-listing-img{
     transform: scale(1.1);
 }
 
@@ -44,11 +53,6 @@
     font-size: 80%;
     color: white;
     font-weight: 600;
-}
-
-.verified-badge{
-    width: 14px;
-    margin-left: 4px;
 }
 
 .profile-listing-owner-location {
@@ -75,95 +79,16 @@
     font-size: 95%;
 }
 
-.profile-listing-title {
-    font-size: 90%;
-    font-weight: 300;
-    margin: 0;
-}
-
-.profile-listing-description {
-    font-weight: 300;
-    margin-top: 10px;
-    font-size: 85%;
-    color: gray;
-}
-
-/* badge */
-
-.profile-listing-img-holder .profile-listing-badge-holder{
-    position: absolute;
-    top: 10px;
-    left: 8px;
-    z-index: 99;
-    display: flex;
-}
-
-.profile-listing-img-holder .profile-listing-badge{
-    display: flex;
-    align-items: end;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    padding: 5px;
-    margin-right: 5px;
-    box-shadow: var(--darkBoxShadow);
-    border: 1px solid white;
-}
-
-.profile-listing-img-holder .profile-listing-badge-img {
-    width: 13px;
-    margin-right: 3px;
-}
-
-.profile-listing-img-holder .profile-listing-badge-title {
-    font-weight: 600;
-    font-size: 70%;
-    color: white;
-}
-
-.profile-listing-img-holder .profile-listing-badge-holder .tooltip-txt{
-    left: 0 !important;
-    width: 125px !important;
-    top: 28px !important;
-}
-
-/* save btn */
-
-.profile-listing-img-holder .save-btn{
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    z-index: 99;
-    display: flex;
-    padding: 6px;
-}
-
-.profile-listing-img-holder .save-btn-img{
-    display: block;
-    fill: rgb(255, 56, 92);
-    height: 24px;
-    width: 24px;
-    stroke: rgb(255, 255, 255);
-    stroke-width: 2;
-    overflow: visible;
-}
-
-.unsaved-btn-img{
-    fill: rgba(0, 0, 0, 0.5) !important;
-}
-
-.profile-listing-review-holder{
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-}
-
-.profile-listing-review-img{
-    width: 12px;
-    margin: 0 3px 0 7px;
-}
-
-
 @media only screen and (max-width: 800px) {
+    .listing-row {
+        overflow-x: scroll;
+        margin-top: 4%;
+    }
+
+    .listing-row .profile-listing-holder {
+        margin: 0 3% 0 0;
+    }
+
     .profile-listing-img-holder {
         height: 250px;
     }
